@@ -9,13 +9,16 @@ class Assetportfolio:
     def calculate_total_net_worth(self):
         sum = 0
         for c in self.__assets:
-            sum+=c.calculate_value-c.get_cost
+            cost = c.get_cost
+            calculate = c.calculate_value()
+            sum+=calculate-cost
         return sum
 
     def save_portfolio(self):
         with open(self.__filename,'w') as f:
             for a in self.__assets:
                 f.write(a.to_report_line())
+                f.write('\n')
 
     def load_portfolio(self):
         self.__assets = []
@@ -23,4 +26,8 @@ class Assetportfolio:
             try:
                 read = f.read()
                 print(read)
+                print(',')
+            except FileNotFoundError:
+                print('file not faund')
+
 
